@@ -1,3 +1,4 @@
+image_name: "dummy-data"
 runs:
   - data_0
   - data_1

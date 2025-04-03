@@ -1,20 +1,32 @@
 stages:
-  generate-raw-data:
-    cmd: uv run python -m src.dummy_data.generate --output data/raw/
+  build_image:
+    cmd:
+    - podman build -t ${image_name} .
+    - podman images --no-trunc --quiet ${image_name} > image.sha
     deps:
-    - src/dummy_data/generate.py
+    - src
+    - pyproject.toml
+    - uv.lock
+    - Dockerfile
+    outs:
+    - image.sha:
+        cache: false
+  generate_raw_data:
+    cmd: podman run --rm -v ./data/raw:/raw:z ${image_name} src.dummy_data.generate --output /raw
+    deps:
+    - image.sha
     outs:
     - data/raw/data_0.csv
     - data/raw/data_1.csv
     - data/raw/data_2.csv
     - data/raw/data_3.csv
     - data/raw/data_4.csv
-  preprocess-data:
+  preprocess_data:
     foreach: ${runs}
     do:
-      cmd: uv run python -m src.dummy_data.preprocess --input data/raw/${item}.csv --output data/preprocessed/
+      cmd: podman run --rm -v ./data/raw:/raw:z -v ./data/preprocessed:/preprocessed:z ${image_name} src.dummy_data.preprocess --input /raw/${item}.csv --output /preprocessed
       deps:
-      - src/dummy_data/preprocess.py
+      - image.sha
       - data/raw/${item}.csv
       outs:
       - data/preprocessed/${item}.parquet
