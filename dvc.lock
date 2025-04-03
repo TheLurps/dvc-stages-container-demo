@@ -1,0 +1,27 @@
+schema: '2.0'
+stages:
+  generate-raw-data:
+    cmd: uvx --with numpy --with polars python src/generate-raw-data.py
+    deps:
+    - path: src/generate-raw-data.py
+      hash: md5
+      md5: c044ca7dd64643649e3d6809b22a3042
+      size: 437
+      isexec: true
+    outs:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: data/raw/data_2.csv
+      hash: md5
+      md5: c01062abcbde5f8f4703ed9cbe0efb0f
+      size: 192911
+    - path: data/raw/data_3.csv
+      hash: md5
+      md5: c45d490da5533ac206a72aeb337fa75a
+      size: 192791
+    - path: data/raw/data_4.csv
+      hash: md5
+      md5: 59b63a0ee4b7448dbc7338188e475a86
+      size: 192878

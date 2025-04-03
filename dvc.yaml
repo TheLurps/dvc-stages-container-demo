@@ -1,0 +1,10 @@
+stages:
+  generate-raw-data:
+    cmd: uvx --with numpy --with polars python src/generate-raw-data.py
+    deps:
+    - src/generate-raw-data.py
+    outs:
+    - data/raw/data_0.csv
+    - data/raw/data_2.csv
+    - data/raw/data_3.csv
+    - data/raw/data_4.csv
