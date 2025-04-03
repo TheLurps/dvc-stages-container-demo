@@ -12,19 +12,19 @@ stages:
     - image.sha:
         cache: false
   generate_raw_data:
-    cmd: podman run --rm -v ./data/raw:/raw:z ${image_name} src.dummy_data.generate --output /raw
+    cmd: podman run --rm -v ./data/raw:/raw:z ${image_name} src.dummy_data.generate
+      --output /raw
     deps:
     - image.sha
     outs:
-    - data/raw/data_0.csv
-    - data/raw/data_1.csv
-    - data/raw/data_2.csv
-    - data/raw/data_3.csv
-    - data/raw/data_4.csv
+    - data/raw:
+        persist: true
   preprocess_data:
     foreach: ${runs}
     do:
-      cmd: podman run --rm -v ./data/raw:/raw:z -v ./data/preprocessed:/preprocessed:z ${image_name} src.dummy_data.preprocess --input /raw/${item}.csv --output /preprocessed
+      cmd: podman run --rm -v ./data/raw:/raw:z -v ./data/preprocessed:/preprocessed:z
+        ${image_name} src.dummy_data.preprocess --input /raw/${item}.csv --output
+        /preprocessed
       deps:
       - image.sha
       - data/raw/${item}.csv

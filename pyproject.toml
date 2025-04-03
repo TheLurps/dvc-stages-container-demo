@@ -1,7 +1,7 @@
 [project]
 name = "dummy-data"
 version = "0.1.0"
-description = ""
+description = "Simple package for test data generation"
 readme = "README.md"
 authors = [
     { name = "Joshua Schraven", email = "joshua.schraven@hsu-hh.de" }

@@ -1,142 +1,5 @@
 schema: '2.0'
 stages:
-  generate-raw-data:
-    cmd: uv run python -m src.dummy_data.generate --output data/raw/
-    deps:
-    - path: src/dummy_data/generate.py
-      hash: md5
-      md5: 12e550d330e551009636a5eca6092dda
-      size: 963
-      isexec: true
-    outs:
-    - path: data/raw/data_0.csv
-      hash: md5
-      md5: 2cb3d3401da51db97fbca25a8ca22834
-      size: 192815
-    - path: data/raw/data_1.csv
-      hash: md5
-      md5: d3cdd6fdb9f87a8685059e88c99432fa
-      size: 192832
-    - path: data/raw/data_2.csv
-      hash: md5
-      md5: c01062abcbde5f8f4703ed9cbe0efb0f
-      size: 192911
-    - path: data/raw/data_3.csv
-      hash: md5
-      md5: c45d490da5533ac206a72aeb337fa75a
-      size: 192791
-    - path: data/raw/data_4.csv
-      hash: md5
-      md5: 59b63a0ee4b7448dbc7338188e475a86
-      size: 192878
-  preprocess-data:
-    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
-      --input data/raw/data_0.csv --output data/preprocessed/
-    deps:
-    - path: data/raw/data_0.csv
-      hash: md5
-      md5: 2cb3d3401da51db97fbca25a8ca22834
-      size: 192815
-    - path: src/preprocess-data.py
-      hash: md5
-      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
-      size: 1429
-      isexec: true
-    outs:
-    - path: data/preprocessed/data_0.parquet
-      hash: md5
-      md5: 8370f557d6808d9f350b87069221de20
-      size: 1730
-  preprocess-data@data_0:
-    cmd: uv run python -m src.dummy_data.preprocess --input data/raw/data_0.csv --output
-      data/preprocessed/
-    deps:
-    - path: data/raw/data_0.csv
-      hash: md5
-      md5: 2cb3d3401da51db97fbca25a8ca22834
-      size: 192815
-    - path: src/dummy_data/preprocess.py
-      hash: md5
-      md5: 2a4bf197d1863be4769d449ab2bb2861
-      size: 1529
-      isexec: true
-    outs:
-    - path: data/preprocessed/data_0.parquet
-      hash: md5
-      md5: 8370f557d6808d9f350b87069221de20
-      size: 1730
-  preprocess-data@data_1:
-    cmd: uv run python -m src.dummy_data.preprocess --input data/raw/data_1.csv --output
-      data/preprocessed/
-    deps:
-    - path: data/raw/data_1.csv
-      hash: md5
-      md5: d3cdd6fdb9f87a8685059e88c99432fa
-      size: 192832
-    - path: src/dummy_data/preprocess.py
-      hash: md5
-      md5: 2a4bf197d1863be4769d449ab2bb2861
-      size: 1529
-      isexec: true
-    outs:
-    - path: data/preprocessed/data_1.parquet
-      hash: md5
-      md5: 55f11ed4d63e220c21d7e5e85e30bcec
-      size: 1730
-  preprocess-data@data_2:
-    cmd: uv run python -m src.dummy_data.preprocess --input data/raw/data_2.csv --output
-      data/preprocessed/
-    deps:
-    - path: data/raw/data_2.csv
-      hash: md5
-      md5: c01062abcbde5f8f4703ed9cbe0efb0f
-      size: 192911
-    - path: src/dummy_data/preprocess.py
-      hash: md5
-      md5: 2a4bf197d1863be4769d449ab2bb2861
-      size: 1529
-      isexec: true
-    outs:
-    - path: data/preprocessed/data_2.parquet
-      hash: md5
-      md5: a471b60937f8b1a18274a05f2a0beb17
-      size: 1730
-  preprocess-data@data_3:
-    cmd: uv run python -m src.dummy_data.preprocess --input data/raw/data_3.csv --output
-      data/preprocessed/
-    deps:
-    - path: data/raw/data_3.csv
-      hash: md5
-      md5: c45d490da5533ac206a72aeb337fa75a
-      size: 192791
-    - path: src/dummy_data/preprocess.py
-      hash: md5
-      md5: 2a4bf197d1863be4769d449ab2bb2861
-      size: 1529
-      isexec: true
-    outs:
-    - path: data/preprocessed/data_3.parquet
-      hash: md5
-      md5: c1f4064cd031bbae9e6db902acda6bee
-      size: 1730
-  preprocess-data@data_4:
-    cmd: uv run python -m src.dummy_data.preprocess --input data/raw/data_4.csv --output
-      data/preprocessed/
-    deps:
-    - path: data/raw/data_4.csv
-      hash: md5
-      md5: 59b63a0ee4b7448dbc7338188e475a86
-      size: 192878
-    - path: src/dummy_data/preprocess.py
-      hash: md5
-      md5: 2a4bf197d1863be4769d449ab2bb2861
-      size: 1529
-      isexec: true
-    outs:
-    - path: data/preprocessed/data_4.parquet
-      hash: md5
-      md5: 2d2c24a9088c9c0b864884114a716761
-      size: 1730
   build_image:
     cmd:
     - podman build -t dummy-data .
@@ -144,12 +7,12 @@ stages:
     deps:
     - path: Dockerfile
       hash: md5
-      md5: 44eb0a46e35c4e2b6a8d72fbf58f2ddf
-      size: 239
+      md5: f9d74f36e2fc2f91f98f1a51a867fa0b
+      size: 244
     - path: pyproject.toml
       hash: md5
-      md5: 7bac5c7dfd72b4d1f141d297c825ceb0
-      size: 427
+      md5: a1dde35a26117e15477398e087a287d2
+      size: 466
     - path: src
       hash: md5
       md5: a05c822ddf903ec4dd23d5bc22ffe15e.dir
@@ -162,7 +25,7 @@ stages:
     outs:
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
   generate_raw_data:
     cmd: podman run --rm -v ./data/raw:/raw:z dummy-data src.dummy_data.generate --output
@@ -170,29 +33,14 @@ stages:
     deps:
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
     outs:
-    - path: data/raw/data_0.csv
+    - path: data/raw
       hash: md5
-      md5: 2cb3d3401da51db97fbca25a8ca22834
-      size: 192815
-    - path: data/raw/data_1.csv
-      hash: md5
-      md5: d3cdd6fdb9f87a8685059e88c99432fa
-      size: 192832
-    - path: data/raw/data_2.csv
-      hash: md5
-      md5: c01062abcbde5f8f4703ed9cbe0efb0f
-      size: 192911
-    - path: data/raw/data_3.csv
-      hash: md5
-      md5: c45d490da5533ac206a72aeb337fa75a
-      size: 192791
-    - path: data/raw/data_4.csv
-      hash: md5
-      md5: 59b63a0ee4b7448dbc7338188e475a86
-      size: 192878
+      md5: 11df82d8962352cbda6de6d8688a2ddd.dir
+      size: 964227
+      nfiles: 5
   preprocess_data@data_0:
     cmd: podman run --rm -v ./data/raw:/raw:z -v ./data/preprocessed:/preprocessed:z
       dummy-data src.dummy_data.preprocess --input /raw/data_0.csv --output /preprocessed
@@ -203,7 +51,7 @@ stages:
       size: 192815
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
     outs:
     - path: data/preprocessed/data_0.parquet
@@ -220,7 +68,7 @@ stages:
       size: 192832
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
     outs:
     - path: data/preprocessed/data_1.parquet
@@ -237,7 +85,7 @@ stages:
       size: 192911
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
     outs:
     - path: data/preprocessed/data_2.parquet
@@ -254,7 +102,7 @@ stages:
       size: 192791
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
     outs:
     - path: data/preprocessed/data_3.parquet
@@ -271,7 +119,7 @@ stages:
       size: 192878
     - path: image.sha
       hash: md5
-      md5: 6f8668d9520b275373c6168f5fde7d0f
+      md5: e4a9aa791c6ff886140cf9ad54f53eec
       size: 72
     outs:
     - path: data/preprocessed/data_4.parquet
