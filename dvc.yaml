@@ -5,6 +5,16 @@ stages:
     - src/generate-raw-data.py
     outs:
     - data/raw/data_0.csv
+    - data/raw/data_1.csv
     - data/raw/data_2.csv
     - data/raw/data_3.csv
     - data/raw/data_4.csv
+  preprocess-data:
+    foreach: ${runs}
+    do:
+      cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py --input data/raw/${item}.csv --output data/preprocessed/
+      deps:
+      - data/raw/data_0.csv
+      - src/preprocess-data.py
+      outs:
+      - data/preprocessed/${item}.parquet

@@ -13,6 +13,10 @@ stages:
       hash: md5
       md5: 2cb3d3401da51db97fbca25a8ca22834
       size: 192815
+    - path: data/raw/data_1.csv
+      hash: md5
+      md5: d3cdd6fdb9f87a8685059e88c99432fa
+      size: 192832
     - path: data/raw/data_2.csv
       hash: md5
       md5: c01062abcbde5f8f4703ed9cbe0efb0f
@@ -25,3 +29,111 @@ stages:
       hash: md5
       md5: 59b63a0ee4b7448dbc7338188e475a86
       size: 192878
+  preprocess-data:
+    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
+      --input data/raw/data_0.csv --output data/preprocessed/
+    deps:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: src/preprocess-data.py
+      hash: md5
+      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
+      size: 1429
+      isexec: true
+    outs:
+    - path: data/preprocessed/data_0.parquet
+      hash: md5
+      md5: 8370f557d6808d9f350b87069221de20
+      size: 1730
+  preprocess-data@data_0:
+    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
+      --input data/raw/data_0.csv --output data/preprocessed/
+    deps:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: src/preprocess-data.py
+      hash: md5
+      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
+      size: 1429
+      isexec: true
+    outs:
+    - path: data/preprocessed/data_0.parquet
+      hash: md5
+      md5: 8370f557d6808d9f350b87069221de20
+      size: 1730
+  preprocess-data@data_1:
+    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
+      --input data/raw/data_1.csv --output data/preprocessed/
+    deps:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: src/preprocess-data.py
+      hash: md5
+      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
+      size: 1429
+      isexec: true
+    outs:
+    - path: data/preprocessed/data_1.parquet
+      hash: md5
+      md5: 55f11ed4d63e220c21d7e5e85e30bcec
+      size: 1730
+  preprocess-data@data_2:
+    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
+      --input data/raw/data_2.csv --output data/preprocessed/
+    deps:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: src/preprocess-data.py
+      hash: md5
+      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
+      size: 1429
+      isexec: true
+    outs:
+    - path: data/preprocessed/data_2.parquet
+      hash: md5
+      md5: a471b60937f8b1a18274a05f2a0beb17
+      size: 1730
+  preprocess-data@data_3:
+    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
+      --input data/raw/data_3.csv --output data/preprocessed/
+    deps:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: src/preprocess-data.py
+      hash: md5
+      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
+      size: 1429
+      isexec: true
+    outs:
+    - path: data/preprocessed/data_3.parquet
+      hash: md5
+      md5: c1f4064cd031bbae9e6db902acda6bee
+      size: 1730
+  preprocess-data@data_4:
+    cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py
+      --input data/raw/data_4.csv --output data/preprocessed/
+    deps:
+    - path: data/raw/data_0.csv
+      hash: md5
+      md5: 2cb3d3401da51db97fbca25a8ca22834
+      size: 192815
+    - path: src/preprocess-data.py
+      hash: md5
+      md5: f8c49964a9c5f69caa9b6e8d2b820ef6
+      size: 1429
+      isexec: true
+    outs:
+    - path: data/preprocessed/data_4.parquet
+      hash: md5
+      md5: 2d2c24a9088c9c0b864884114a716761
+      size: 1730
