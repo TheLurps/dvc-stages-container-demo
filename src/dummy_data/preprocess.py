@@ -6,6 +6,9 @@ import os
 from pathlib import Path
 import duckdb
 import polars as pl
+import logging
+
+logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(description="Preprocess data")
@@ -46,5 +49,7 @@ if __name__ == "__main__":
     ])
 
     result = duckdb.sql(agg_query).pl()
+
     output_file = Path(output_dir, input_file.stem + ".parquet")
+    logger.debug(f"Writing to {output_file}")
     result.write_parquet(output_file)

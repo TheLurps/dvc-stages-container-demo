@@ -1,8 +1,8 @@
 stages:
   generate-raw-data:
-    cmd: uvx --with numpy --with polars python src/generate-raw-data.py
+    cmd: uv run python -m src.dummy_data.generate --output data/raw/
     deps:
-    - src/generate-raw-data.py
+    - src/dummy_data/generate.py
     outs:
     - data/raw/data_0.csv
     - data/raw/data_1.csv
@@ -12,9 +12,9 @@ stages:
   preprocess-data:
     foreach: ${runs}
     do:
-      cmd: uvx --with duckdb --with polars --with pyarrow python src/preprocess-data.py --input data/raw/${item}.csv --output data/preprocessed/
+      cmd: uv run python -m src.dummy_data.preprocess --input data/raw/${item}.csv --output data/preprocessed/
       deps:
-      - data/raw/data_0.csv
-      - src/preprocess-data.py
+      - src/dummy_data/preprocess.py
+      - data/raw/${item}.csv
       outs:
       - data/preprocessed/${item}.parquet
